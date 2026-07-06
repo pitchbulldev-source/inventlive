@@ -9,10 +9,15 @@ export default function BuyButton({ packageId }: { packageId: string }) {
   return (
     <button
       disabled={pending}
-      onClick={() => start(async () => { await buyCoins(packageId); })}
-      className="h-10 w-full rounded-lg bg-brand font-semibold text-brand-ink disabled:opacity-60"
+      onClick={() =>
+        start(async () => {
+          const res = await buyCoins(packageId);
+          if (res?.url) window.location.href = res.url; // → Wompi Web Checkout
+        })
+      }
+      className="cta h-10 w-full rounded-lg disabled:opacity-60"
     >
-      {pending ? "Comprando…" : "Comprar"}
+      {pending ? "Procesando…" : "Comprar"}
     </button>
   );
 }

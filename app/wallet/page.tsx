@@ -5,7 +5,7 @@ import BuyButton from "./BuyButton";
 
 export const dynamic = "force-dynamic";
 
-export default async function WalletPage() {
+export default async function WalletPage({ searchParams }: { searchParams: Promise<{ ref?: string }> }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
@@ -17,6 +17,13 @@ export default async function WalletPage() {
   ]);
 
   const coins = bals?.find((b) => b.currency === "coin")?.balance ?? 0;
+
+  const { ref } = await searchParams;
+  let pendingBuy = false;
+  if (ref) {
+    const { data: pur } = await supabase.from("purchases").select("status").eq("provider_ref", ref).maybeSingle();
+    pendingBuy = pur?.status === "pending";
+  }
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
@@ -30,6 +37,12 @@ export default async function WalletPage() {
           <div className="font-mono text-2xl font-bold text-amber">🪙 {n(coins)}</div>
         </div>
       </div>
+
+      {ref && (
+        <div className={`mt-6 rounded-xl border p-4 text-sm ${pendingBuy ? "border-amber/40 bg-amber/10 text-amber" : "border-live/40 bg-live/10 text-live"}`}>
+          {pendingBuy ? "⏳ Tu compra se está procesando — las fichas aparecen apenas Wompi confirme el pago." : "✅ ¡Compra confirmada! Tus fichas ya están acreditadas."}
+        </div>
+      )}
 
       <section className="mt-8">
         <h2 className="text-lg font-bold">Paquetes</h2>
