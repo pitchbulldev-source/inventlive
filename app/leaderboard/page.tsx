@@ -14,7 +14,7 @@ function Row({ i, name, handle, value, unit, xp }: any) {
       <span className="w-6 text-center font-mono text-sm text-faint">{MEDAL[i] ?? i + 1}</span>
       <div className="grid h-9 w-9 place-items-center rounded-full bg-surface-2 text-sm font-bold text-brand">{(name ?? "?").charAt(0).toUpperCase()}</div>
       <div className="min-w-0 flex-1">
-        <div className="truncate font-semibold">{name}</div>
+        <Link href={`/u/${handle}`} className="block truncate font-semibold hover:text-brand">{name}</Link>
         <div className="text-xs text-faint">Nv.{lvl.level} · {lvl.title}</div>
       </div>
       <div className="font-mono text-sm">{unit} {n(value)}</div>
