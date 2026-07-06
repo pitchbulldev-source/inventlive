@@ -171,6 +171,7 @@ export type Database = {
           host_id: string
           id: string
           idempotency_key: string | null
+          qty: number
           room_id: string
           sender_id: string
         }
@@ -182,6 +183,7 @@ export type Database = {
           host_id: string
           id?: string
           idempotency_key?: string | null
+          qty?: number
           room_id: string
           sender_id: string
         }
@@ -193,6 +195,7 @@ export type Database = {
           host_id?: string
           id?: string
           idempotency_key?: string | null
+          qty?: number
           room_id?: string
           sender_id?: string
         }
@@ -793,6 +796,15 @@ export type Database = {
         Args: {
           p_gift_id: string
           p_idempotency_key?: string
+          p_room_id: string
+        }
+        Returns: Json
+      }
+      send_gift_combo: {
+        Args: {
+          p_gift_id: string
+          p_idempotency_key?: string
+          p_qty: number
           p_room_id: string
         }
         Returns: Json
