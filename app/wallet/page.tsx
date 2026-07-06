@@ -27,7 +27,7 @@ export default async function WalletPage() {
         </div>
         <div className="rounded-2xl border border-line bg-surface px-5 py-3">
           <div className="text-xs uppercase tracking-wide text-faint">Saldo</div>
-          <div className="font-mono text-2xl font-bold text-brand">🪙 {n(coins)}</div>
+          <div className="font-mono text-2xl font-bold text-amber">🪙 {n(coins)}</div>
         </div>
       </div>
 
@@ -36,8 +36,8 @@ export default async function WalletPage() {
         <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {packages?.map((pkg) => (
             <div key={pkg.id} className="flex flex-col rounded-2xl border border-line bg-surface p-4">
-              <div className="font-mono text-2xl font-bold text-brand">🪙 {n(pkg.coins)}</div>
-              {pkg.bonus_coins > 0 && <div className="text-xs text-live">+{n(pkg.bonus_coins)} bonus</div>}
+              <div className="font-mono text-2xl font-bold text-amber">🪙 {n(pkg.coins)}</div>
+              {pkg.bonus_coins > 0 && <div className="text-xs text-amber">+{n(pkg.bonus_coins)} bonus</div>}
               <div className="mt-2 text-muted">{cop(pkg.price_cents_cop)}</div>
               <div className="mt-4"><BuyButton packageId={pkg.id} /></div>
             </div>

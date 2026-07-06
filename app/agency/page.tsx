@@ -43,7 +43,7 @@ export default async function AgencyPage() {
 
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
         <div className="rounded-2xl border border-line bg-surface p-4"><div className="text-xs uppercase text-faint">Hosts</div><div className="mt-1 font-mono text-2xl font-bold">{n(ids.length)}</div></div>
-        <div className="rounded-2xl border border-line bg-surface p-4"><div className="text-xs uppercase text-faint">Beans generados</div><div className="mt-1 font-mono text-2xl font-bold text-live">💎 {n(totalBeans)}</div></div>
+        <div className="rounded-2xl border border-line bg-surface p-4"><div className="text-xs uppercase text-faint">Beans generados</div><div className="mt-1 font-mono text-2xl font-bold text-amber">💎 {n(totalBeans)}</div></div>
         <div className="rounded-2xl border border-line bg-surface p-4"><div className="text-xs uppercase text-faint">Comisión de agencia ({agency.default_split_bps / 100}%)</div><div className="mt-1 font-mono text-2xl font-bold text-brand">💎 {n(commission)}</div></div>
       </div>
 
@@ -58,7 +58,7 @@ export default async function AgencyPage() {
               {hosts?.length ? hosts.map((h: any) => (
                 <tr key={h.user_id} className="border-t border-line">
                   <td className="px-4 py-3 font-sans">{h.profiles?.display_name ?? "—"}</td>
-                  <td className="px-4 py-3 text-live">💎 {n(earnMap[h.user_id]?.beans_total ?? 0)}</td>
+                  <td className="px-4 py-3 text-amber">💎 {n(earnMap[h.user_id]?.beans_total ?? 0)}</td>
                   <td className="px-4 py-3 text-muted">{n(earnMap[h.user_id]?.gifts_received ?? 0)}</td>
                 </tr>
               )) : (

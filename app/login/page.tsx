@@ -11,7 +11,7 @@ export default function LoginPage() {
     <div className="mx-auto grid max-w-md gap-6 px-4 py-16">
       <div>
         <h1 className="text-3xl font-extrabold tracking-tight">Entrar</h1>
-        <p className="mt-1 text-muted">Bienvenido de vuelta a InventLive.</p>
+        <p className="mt-1 text-muted">Bienvenido de vuelta a weeto.</p>
       </div>
       <form action={action} className="grid gap-4 rounded-2xl border border-line bg-surface p-6">
         <label className="grid gap-1.5 text-sm">

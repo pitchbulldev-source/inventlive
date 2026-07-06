@@ -1,33 +1,76 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0E1524;
-  --color-surface: #151E30;
-  --color-surface-2: #1C2740;
-  --color-line: #26324D;
-  --color-ink: #E7ECF6;
-  --color-muted: #9DA9C2;
-  --color-faint: #6B7794;
-  --color-brand: #00D4FF;
-  --color-brand-ink: #041a1f;
-  --color-live: #FF4D7D;
-  --color-ok: #31D0A5;
-  --color-warn: #FFB020;
-  --color-danger: #FF5C6C;
-  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  /* Afterglow — base & superficies */
+  --color-bg: #0B0710;
+  --color-surface: #170D24;
+  --color-surface-2: #241435;
+  --color-line: #2C1C40;
+  /* texto */
+  --color-ink: #F3ECFB;
+  --color-muted: #C9BCE0;
+  --color-faint: #8B7AA0;
+  /* acentos con rol semántico */
+  --color-brand: #FF3A8A;       /* magenta — CTA/primario/regalo-inicio */
+  --color-brand-ink: #180018;   /* texto sobre magenta */
+  --color-amber: #FFA43A;       /* economía — fichas, niveles, oro */
+  --color-uv: #8C4AFF;          /* atmósfera/VIP — nunca CTA */
+  --color-live: #C6FF3A;        /* SOLO en vivo */
+  --color-ok: #C6FF3A;
+  --color-warn: #FFA43A;
+  --color-danger: #E0244B;      /* solo error real */
+  /* fuentes */
+  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-display: var(--font-display), system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
 }
 
 :root { color-scheme: dark; }
 html, body { height: 100%; }
 body {
   background:
-    radial-gradient(1100px 520px at 84% -10%, rgba(0,212,255,.08), transparent 60%),
-    radial-gradient(820px 460px at 2% 2%, rgba(255,77,125,.06), transparent 55%),
+    radial-gradient(1200px 620px at 82% -8%, rgba(140,74,255,.15), transparent 62%),
+    radial-gradient(900px 520px at 4% 3%, rgba(255,58,138,.10), transparent 58%),
     var(--color-bg);
+  background-attachment: fixed;
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
-::selection { background: rgba(0,212,255,.25); }
+::selection { background: rgba(255,58,138,.28); }
 :focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+h1, h2 { font-family: var(--font-display); letter-spacing: -0.02em; }
+
+/* CTA firma magenta→ámbar (la ignición) */
+.cta {
+  background-image: linear-gradient(120deg, var(--color-brand), var(--color-amber));
+  color: var(--color-brand-ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+.text-glow { text-shadow: 0 0 18px rgba(255,58,138,.45); }
+.grad-ignite {
+  background-image: linear-gradient(120deg, var(--color-brand), var(--color-amber));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* El pálpito — SOLO lo que está en vivo respira (~72bpm) */
+@keyframes palpito { 0%,100%{transform:scale(.82);opacity:.75} 18%{transform:scale(1.2);opacity:1} }
+.live-dot { border-radius:9999px; background: var(--color-live); box-shadow: 0 0 10px var(--color-live); animation: palpito 1.15s cubic-bezier(.16,1,.3,1) infinite; }
+
+/* Ignición del regalo — la sala se enciende */
+@keyframes gift-fly {
+  0% { transform: translateY(0) scale(.6); opacity: 0; }
+  15% { opacity: 1; transform: translateY(-14px) scale(1.15); }
+  100% { transform: translateY(-180px) scale(1); opacity: 0; }
+}
+.gift-fly { animation: gift-fly 1.6s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes stage-ignite { 0%{filter:brightness(1) saturate(1)} 30%{filter:brightness(1.35) saturate(1.4)} 100%{filter:brightness(1) saturate(1)} }
+.igniting { animation: stage-ignite 1.1s cubic-bezier(.16,1,.3,1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot { animation: none; }
+  .gift-fly { animation-duration: .01ms; }
+  .igniting { animation: none; }
+  * { transition-duration: .01ms !important; }
+}

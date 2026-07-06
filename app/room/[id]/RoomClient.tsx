@@ -105,8 +105,8 @@ export default function RoomClient({ room, gifts, initialMessages, initialGifts,
     <main className="mx-auto grid max-w-5xl gap-4 px-4 py-6 lg:grid-cols-[1fr_340px]">
       {/* Video + gifts */}
       <section className="flex flex-col gap-3">
-        <div className="relative aspect-video overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-[#2929C7] via-[#3a1f6e] to-[#FF4D7D]">
-          <span className="absolute left-3 top-3 z-10 rounded-md bg-black/50 px-2 py-0.5 text-xs font-bold uppercase text-live backdrop-blur">● Live</span>
+        <div className="relative aspect-video overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-[#2a1247] via-[#170D24] to-[#0d0716]">
+          <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-md bg-black/50 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-live backdrop-blur"><span className="live-dot h-1.5 w-1.5" />EN VIVO</span>
           <span className="absolute right-3 top-3 z-10 rounded-md bg-black/40 px-2 py-0.5 font-mono text-xs text-white backdrop-blur">👤 {n(room.viewers)}</span>
           <LiveStage roomId={room.id} isHostSelf={!!isHostSelf} hostName={host?.display_name} />
           {/* Gift animations */}
@@ -133,7 +133,7 @@ export default function RoomClient({ room, gifts, initialMessages, initialGifts,
         <div className="rounded-2xl border border-line bg-surface p-3">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-sm font-semibold text-muted">Enviar regalo</span>
-            <Link href="/wallet" className="rounded-full border border-line px-3 py-1 font-mono text-sm text-brand hover:border-brand/60">🪙 {n(coins)}</Link>
+            <Link href="/wallet" className="rounded-full border border-line px-3 py-1 font-mono text-sm text-amber hover:border-amber/60">🪙 {n(coins)}</Link>
           </div>
           {isHostSelf ? (
             <p className="py-2 text-center text-sm text-muted">Sos el host de esta sala.</p>
@@ -141,7 +141,7 @@ export default function RoomClient({ room, gifts, initialMessages, initialGifts,
             <div className="grid grid-cols-5 gap-2">
               {gifts.map((g: any) => (
                 <button key={g.id} onClick={() => sendGift(g)} title={`${g.name} · ${g.coin_cost} fichas`}
-                  className="flex flex-col items-center gap-1 rounded-xl border border-line bg-bg p-2 transition hover:border-live/60 active:scale-95">
+                  className="flex flex-col items-center gap-1 rounded-xl border border-line bg-bg p-2 transition hover:border-brand/60 active:scale-95">
                   <span className="text-2xl">{emojiFor(g.code)}</span>
                   <span className="font-mono text-[11px] text-muted">{n(g.coin_cost)}</span>
                 </button>
@@ -156,7 +156,7 @@ export default function RoomClient({ room, gifts, initialMessages, initialGifts,
         <div className="border-b border-line px-4 py-2.5 text-sm font-semibold text-muted">Chat en vivo</div>
         <div className="flex-1 space-y-1.5 overflow-y-auto px-4 py-3 text-sm">
           {feed.length > 0 && feed.slice(-3).map((ev: any, i) => (
-            <div key={`g${ev.id ?? i}`} className="rounded-lg bg-live/10 px-2 py-1 text-live">
+            <div key={`g${ev.id ?? i}`} className="rounded-lg bg-brand/10 px-2 py-1 text-brand">
               <b>{resolveName(ev.sender_id)}</b> envió {emojiFor(giftById[ev.gift_id]?.code)} {giftById[ev.gift_id]?.name}
             </div>
           ))}

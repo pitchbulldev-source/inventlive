@@ -34,10 +34,10 @@ export default function StartPk({ otherRooms }: { otherRooms: { id: string; labe
       <div className="mb-2 text-sm font-semibold text-muted">⚔️ Iniciar PK battle</div>
       <div className="flex gap-2">
         <select value={sel} onChange={(e) => setSel(e.target.value)}
-          className="h-10 flex-1 rounded-lg border border-line bg-bg px-2 text-sm outline-none focus:border-live">
+          className="h-10 flex-1 rounded-lg border border-line bg-bg px-2 text-sm outline-none focus:border-brand">
           {otherRooms.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
         </select>
-        <button onClick={go} disabled={pending} className="rounded-lg bg-live px-4 text-sm font-semibold text-white disabled:opacity-60">
+        <button onClick={go} disabled={pending} className="cta rounded-lg px-4 text-sm disabled:opacity-60">
           {pending ? "…" : "Retar"}
         </button>
       </div>

@@ -5,8 +5,8 @@ import { n } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 const GRADIENTS = [
-  "from-[#2929C7] to-[#FF4D7D]", "from-[#00D4FF] to-[#2929C7]",
-  "from-[#FF4D7D] to-[#FFB020]", "from-[#31D0A5] to-[#00D4FF]",
+  "from-[#FF3A8A] to-[#8C4AFF]", "from-[#8C4AFF] to-[#241435]",
+  "from-[#FF3A8A] to-[#FFA43A]", "from-[#241435] to-[#8C4AFF]",
 ];
 
 export default async function RoomsPage() {
@@ -20,8 +20,8 @@ export default async function RoomsPage() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
       <div className="flex items-center gap-3">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-live/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-live">
-          <span className="h-2 w-2 animate-pulse rounded-full bg-live" /> En vivo
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-live/12 px-3 py-1 font-mono text-xs uppercase tracking-wider text-live">
+          <span className="live-dot h-2 w-2" /> En vivo
         </span>
         <h1 className="text-3xl font-extrabold tracking-tight">Salas</h1>
       </div>

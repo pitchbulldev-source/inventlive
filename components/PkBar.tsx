@@ -45,17 +45,17 @@ export default function PkBar({ battle, aName, bName }: { battle: any; aName: st
   const winnerName = winner ? (winner === battle.challenger_host ? aName : bName) : null;
 
   return (
-    <div className="rounded-2xl border border-live/40 bg-live/5 p-3">
+    <div className="rounded-2xl border border-brand/40 bg-brand/5 p-3">
       <div className="mb-1.5 flex items-center justify-between text-xs">
         <span className="font-bold text-brand">{aName}</span>
-        <span className="font-mono font-bold text-live">
+        <span className="font-mono font-bold text-amber">
           {finished ? (winnerName ? `🏆 ${winnerName}` : "Empate") : `⚔️ PK ${mm}:${ss}`}
         </span>
-        <span className="font-bold text-live">{bName}</span>
+        <span className="font-bold text-uv">{bName}</span>
       </div>
       <div className="flex h-4 overflow-hidden rounded-full bg-surface-2">
         <div className="flex items-center justify-start bg-gradient-to-r from-brand to-brand/70 pl-2 text-[10px] font-bold text-brand-ink transition-all" style={{ width: `${aPct}%` }}>{n(a)}</div>
-        <div className="flex flex-1 items-center justify-end bg-gradient-to-r from-live/70 to-live pr-2 text-[10px] font-bold text-white">{n(b)}</div>
+        <div className="flex flex-1 items-center justify-end bg-gradient-to-r from-uv/70 to-uv pr-2 text-[10px] font-bold text-white">{n(b)}</div>
       </div>
     </div>
   );

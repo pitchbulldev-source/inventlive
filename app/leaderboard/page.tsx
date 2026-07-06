@@ -32,7 +32,7 @@ export default async function LeaderboardPage() {
   return (
     <main className="mx-auto max-w-4xl px-4 py-10">
       <h1 className="text-3xl font-extrabold tracking-tight">Ranking</h1>
-      <p className="mt-1 text-muted">Los que más brillan en InventLive.</p>
+      <p className="mt-1 text-muted">Los que más brillan en weeto.</p>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <section className="overflow-hidden rounded-2xl border border-line bg-surface">

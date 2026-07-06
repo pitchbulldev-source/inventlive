@@ -19,7 +19,7 @@ export default async function HostPage() {
         <h1 className="mt-4 text-2xl font-extrabold">Convertite en host</h1>
         <p className="mt-2 text-muted">Transmití en vivo y recibí regalos de tu audiencia. Ganás el 40% del valor de cada regalo en beans, canjeables por dinero.</p>
         <form action={becomeHost} className="mt-6">
-          <button className="h-11 w-full rounded-lg bg-live font-semibold text-white">Activar mi cuenta de host</button>
+          <button className="cta h-11 w-full rounded-lg">Activar mi cuenta de host</button>
         </form>
       </main>
     );
@@ -56,7 +56,7 @@ export default async function HostPage() {
             <form action={goLive} className="mt-4 grid gap-2">
               <input name="title" placeholder="Título del stream" defaultValue={room?.title ?? ""}
                 className="h-10 rounded-lg border border-line bg-bg px-3 text-sm outline-none focus:border-brand" />
-              <button className="h-10 rounded-lg bg-live font-semibold text-white">🔴 Salir en vivo</button>
+              <button className="cta h-10 rounded-lg">🔴 Salir en vivo</button>
             </form>
           )}
         </div>
@@ -64,7 +64,7 @@ export default async function HostPage() {
         {/* Ganancias */}
         <div className="rounded-2xl border border-line bg-surface p-5">
           <span className="text-sm font-semibold text-muted">Ganancias (beans)</span>
-          <div className="mt-2 font-mono text-3xl font-bold text-live">💎 {n(beans)}</div>
+          <div className="mt-2 font-mono text-3xl font-bold text-amber">💎 {n(beans)}</div>
           <form action={requestPayout} className="mt-4 flex gap-2">
             <input name="beans" type="number" min={1} max={beans} defaultValue={beans || 0}
               className="h-10 w-full rounded-lg border border-line bg-bg px-3 font-mono text-sm outline-none focus:border-brand" />
@@ -87,7 +87,7 @@ export default async function HostPage() {
                 <tr key={g.id} className="border-t border-line">
                   <td className="px-4 py-2.5 font-sans">{g.profiles?.display_name ?? "Alguien"}</td>
                   <td className="px-4 py-2.5 text-muted">{n(g.coins)}</td>
-                  <td className="px-4 py-2.5 text-live">+{n(g.beans)}</td>
+                  <td className="px-4 py-2.5 text-amber">+{n(g.beans)}</td>
                 </tr>
               )) : (
                 <tr><td colSpan={3} className="px-4 py-6 text-center text-muted">Todavía no recibiste regalos.</td></tr>
