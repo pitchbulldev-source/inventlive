@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { signUp } from "@/app/auth/actions";
+import GoogleButton from "@/components/GoogleButton";
 
 export default function SignupPage() {
   const [state, action, pending] = useActionState(signUp, {});
@@ -12,6 +13,10 @@ export default function SignupPage() {
       <div>
         <h1 className="text-3xl font-extrabold tracking-tight">Crear cuenta</h1>
         <p className="mt-1 text-muted">Sumate a weeto en segundos.</p>
+      </div>
+      <div className="grid gap-4">
+        <GoogleButton label="Registrarte con Google" />
+        <div className="flex items-center gap-3 text-[11px] uppercase tracking-widest text-faint"><span className="h-px flex-1 bg-line" />o con tu email<span className="h-px flex-1 bg-line" /></div>
       </div>
       <form action={action} className="grid gap-4 rounded-2xl border border-line bg-surface p-6">
         <label className="grid gap-1.5 text-sm">
