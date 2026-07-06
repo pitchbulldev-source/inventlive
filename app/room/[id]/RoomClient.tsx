@@ -8,6 +8,7 @@ import { n } from "@/lib/format";
 import FollowButton from "@/components/FollowButton";
 import PkBar from "@/components/PkBar";
 import StartPk from "@/components/StartPk";
+import LiveStage from "@/components/LiveStage";
 
 const EMOJI: Record<string, string> = { rose: "🌹", heart: "💖", crown: "👑", rocket: "🚀", castle: "🏰" };
 const emojiFor = (code?: string) => (code && EMOJI[code]) || "🎁";
@@ -107,15 +108,7 @@ export default function RoomClient({ room, gifts, initialMessages, initialGifts,
         <div className="relative aspect-video overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-[#2929C7] via-[#3a1f6e] to-[#FF4D7D]">
           <span className="absolute left-3 top-3 z-10 rounded-md bg-black/50 px-2 py-0.5 text-xs font-bold uppercase text-live backdrop-blur">● Live</span>
           <span className="absolute right-3 top-3 z-10 rounded-md bg-black/40 px-2 py-0.5 font-mono text-xs text-white backdrop-blur">👤 {n(room.viewers)}</span>
-          <div className="absolute inset-0 grid place-items-center">
-            <div className="text-center">
-              <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-white/15 text-3xl font-bold text-white backdrop-blur">
-                {(host?.display_name ?? "?").charAt(0).toUpperCase()}
-              </div>
-              <p className="mt-3 text-sm text-white/80">Stream de {host?.display_name ?? "el host"}</p>
-              <p className="mt-1 text-xs text-white/50">▶︎ Acá va el player de Amazon IVS / LiveKit</p>
-            </div>
-          </div>
+          <LiveStage roomId={room.id} isHostSelf={!!isHostSelf} hostName={host?.display_name} />
           {/* Gift animations */}
           <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2">
             {flying.map((f) => <span key={f.key} className="gift-fly absolute text-4xl">{f.emoji}</span>)}
