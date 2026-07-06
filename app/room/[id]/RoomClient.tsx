@@ -40,6 +40,7 @@ export default function RoomClient({ room, gifts, initialMessages, initialGifts,
   const chargingRef = useRef<any>(null);
   const comboRef = useRef(0);
   const timerRef = useRef<any>(null);
+  const sendingRef = useRef(false);
 
   const host = room.hosts?.profiles;
   const isHostSelf = userId && room.host_id === userId;
@@ -73,6 +74,9 @@ export default function RoomClient({ room, gifts, initialMessages, initialGifts,
 
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
 
+  // Corta la cadena de timers del combo si se desmonta a mitad de un hold.
+  useEffect(() => () => { clearTimeout(timerRef.current); chargingRef.current = null; }, []);
+
   function flash(m: string) { setToast(m); setTimeout(() => setToast(""), 2600); }
 
   async function sendMessage(e: React.FormEvent) {
@@ -96,7 +100,7 @@ export default function RoomClient({ room, gifts, initialMessages, initialGifts,
   function startCharge(gift: any) {
     if (!userId) { flash("Iniciá sesión para regalar."); return; }
     if (coins < gift.coin_cost) { flash("No te alcanzan las fichas."); return; }
-    if (chargingRef.current) return;
+    if (chargingRef.current || sendingRef.current) return;
     const maxQ = Math.min(99, Math.floor(coins / gift.coin_cost));
     chargingRef.current = gift;
     comboRef.current = 1; setCombo(1); setStageHot(true);
@@ -125,21 +129,26 @@ export default function RoomClient({ room, gifts, initialMessages, initialGifts,
   }
 
   async function sendGiftCombo(gift: any, qty: number) {
-    const key = (globalThis.crypto?.randomUUID?.() ?? String(Math.random()));
-    const rpc = qty > 1
-      ? supabase.rpc("send_gift_combo", { p_room_id: room.id, p_gift_id: gift.id, p_qty: qty, p_idempotency_key: key })
-      : supabase.rpc("send_gift", { p_room_id: room.id, p_gift_id: gift.id, p_idempotency_key: key });
-    const { data, error } = await rpc;
-    if (error) {
-      flash(error.message.includes("insufficient") ? "No te alcanzan las fichas." :
-            error.message.includes("room_not_live") ? "La sala ya no está en vivo." :
-            error.message.includes("cannot_gift_self") ? "No podés regalarte a vos mismo." : "No se pudo enviar el regalo.");
-      return;
+    sendingRef.current = true;
+    try {
+      const key = (globalThis.crypto?.randomUUID?.() ?? String(Math.random()));
+      const rpc = qty > 1
+        ? supabase.rpc("send_gift_combo", { p_room_id: room.id, p_gift_id: gift.id, p_qty: qty, p_idempotency_key: key })
+        : supabase.rpc("send_gift", { p_room_id: room.id, p_gift_id: gift.id, p_idempotency_key: key });
+      const { data, error } = await rpc;
+      if (error) {
+        flash(error.message.includes("insufficient") ? "No te alcanzan las fichas." :
+              error.message.includes("room_not_live") ? "La sala ya no está en vivo." :
+              error.message.includes("cannot_gift_self") ? "No podés regalarte a vos mismo." : "No se pudo enviar el regalo.");
+        return;
+      }
+      const res = data as any;
+      if (res?.coin_balance != null) setCoins(res.coin_balance);
+      flash(`Enviaste ${qty}× ${emojiFor(gift.code)} ${gift.name}`);
+      router.refresh();
+    } finally {
+      sendingRef.current = false;
     }
-    const res = data as any;
-    if (res?.coin_balance != null) setCoins(res.coin_balance);
-    flash(`Enviaste ${qty}× ${emojiFor(gift.code)} ${gift.name}`);
-    router.refresh();
   }
 
   async function report() {

@@ -7,6 +7,17 @@ import FollowButton from "@/components/FollowButton";
 
 export const dynamic = "force-dynamic";
 
+// Solo renderizar avatares de hosts confiables (Google / Supabase Storage) —
+// evita que un avatar_url arbitrario se use como beacon de tracking en perfiles públicos.
+function safeAvatar(url?: string | null): string | null {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    if (u.protocol !== "https:") return null;
+    return /(^|\.)(googleusercontent\.com|supabase\.co|supabase\.in)$/.test(u.hostname) ? url : null;
+  } catch { return null; }
+}
+
 export default async function ProfilePage({ params }: { params: Promise<{ handle: string }> }) {
   const { handle } = await params;
   const supabase = await createClient();
@@ -44,7 +55,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ handle
         <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-uv/20 blur-3xl" />
         <div className="relative flex items-center gap-4">
           <div className="grid h-20 w-20 shrink-0 place-items-center overflow-hidden rounded-2xl bg-surface-2 text-3xl font-extrabold text-brand ring-1 ring-line">
-            {profile.avatar_url ? <img src={profile.avatar_url} alt="" className="h-full w-full object-cover" /> : (profile.display_name ?? "?").charAt(0).toUpperCase()}
+            {safeAvatar(profile.avatar_url) ? <img src={safeAvatar(profile.avatar_url)!} alt="" className="h-full w-full object-cover" /> : (profile.display_name ?? "?").charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">
             <h1 className="truncate text-3xl font-extrabold tracking-tight">{profile.display_name || handle}</h1>
